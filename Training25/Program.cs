@@ -3,11 +3,18 @@
 // Copyright (c) Metamation India.
 // ------------------------------------------------------------------
 // Program.cs
-// Program on main branch.
+// Program to convert a decimal into binary and hexadecimal.
 // ------------------------------------------------------------------------------------------------
 namespace Training25;
 internal class Program {
    static void Main (string[] args) {
-      Console.WriteLine ("Hello, World!");
+      for (; ; ) {
+         Console.Write ("Enter a number or [X] to exit: ");
+         string? input = Console.ReadLine ();
+         if (input?.ToUpper () == "X") Environment.Exit (0);
+         Console.WriteLine (int.TryParse (input, out int num) ?
+         $"Input: {num}\nHEX: {num:X}\nBinary: {Convert.ToString (num, 2)}" :
+         "Please enter a valid input!!!");
+      }
    }
 }
