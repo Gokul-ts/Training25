@@ -15,9 +15,9 @@ internal class Program {
    static void Calculate () {
       for (; ; ) {
          Console.Write ("Enter two non-zero integers\nnum1: ");
-         string? input1 = Console.ReadLine ();
+         var input1 = Console.ReadLine ();
          Console.Write ("num2: ");
-         string? input2 = Console.ReadLine ();
+         var input2 = Console.ReadLine ();
          Console.WriteLine (int.TryParse (input1, out int num1) && int.TryParse (input2, out int num2)
             && num1 > 0 && num2 > 0 ? $"LCM:  {LCM (num1, num2)}\nGCD:  {GCD (num1, num2)}\n" :
             "Please enter a valid input!!!\n");
