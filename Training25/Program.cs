@@ -7,7 +7,7 @@
 // ------------------------------------------------------------------------------------------------
 namespace Training25;
 internal class Program {
-   static void Main (string[] args) {
+   static void Main () {
       for (; ; ) {
          Console.Write ("Enter a number or [X] to exit: ");
          var input = Console.ReadLine ();
