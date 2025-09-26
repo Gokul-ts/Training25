@@ -7,7 +7,7 @@
 // ------------------------------------------------------------------------------------------------
 namespace Training25;
 internal class Program {
-   static void Main (string[] args) {
+   static void Main () {
       ReducedString ();
    }
 
