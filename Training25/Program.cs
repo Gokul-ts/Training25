@@ -7,7 +7,7 @@
 // ------------------------------------------------------------------------------------------------
 namespace Training25;
 internal class Program {
-   static void Main (string[] args) {
+   static void Main () {
       for (; ; ) {
          Console.Write ("Enter a positive integer: ");
          string? input = Console.ReadLine ();
@@ -17,6 +17,7 @@ internal class Program {
             Console.WriteLine ("Please enter a valid number!!!\n");
       }
    }
+
    /// <summary>Returns the digital root of a number</summary>
    static int DigitalRoot (int num) {
       while (num > 9) {
