@@ -7,7 +7,7 @@
 // ------------------------------------------------------------------------------------------------
 namespace Training25;
 internal class Program {
-   static void Main (string[] args) {
+   static void Main () {
       for (; ; ) {
          Console.Write ("Enter a number between 0 and 3999 or [X] to exit: ");
          string? input = Console.ReadLine ();
@@ -24,6 +24,7 @@ internal class Program {
          } else Console.WriteLine ("Please enter a valid number!!!\n");
       }
    }
+
    /// <summary>Converts number into words</summary>
    static string ToWords (int num) {
       if (num == 0) return " Zero";
@@ -44,6 +45,7 @@ internal class Program {
       }
       return words;
    }
+
    /// <summary>Converts number into roman numerals</summary>
    static string ToRoman (int num) {
       if (num == 0) return "Nil";
