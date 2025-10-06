@@ -8,11 +8,6 @@
 namespace Training25;
 internal class Program {
    static void Main () {
-      Calculate ();
-   }
-
-   /// <summary>Calculates the LCM and GCD of two numbers</summary>
-   static void Calculate () {
       for (; ; ) {
          Console.Write ("Enter two non-zero integers\nnum1: ");
          var input1 = Console.ReadLine ();
