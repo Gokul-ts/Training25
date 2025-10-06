@@ -12,9 +12,16 @@ internal class Program {
          Console.Write ("Enter a number or [X] to exit: ");
          var input = Console.ReadLine ();
          if (input?.ToUpper () == "X") Environment.Exit (0);
-         Console.WriteLine (int.TryParse (input, out int num) ?
-         $"Input: {num}\nHEX: {num:X}\nBinary: {Convert.ToString (num, 2)}" :
+         Console.WriteLine (int.TryParse (input, out int num) && num >= 0 ?
+         $"Input: {num}\nHEX: {num:X}\nBinary: {Binary (num)}" :
          "Please enter a valid input!!!");
+      }
+
+      /// <summary>Returns the binary value of a number</summary>
+      string Binary (int num) {
+         string result = num is 0 ? "0" : string.Empty;
+         for (; num > 0; num /= 2) result = (num % 2) + result;
+         return result;
       }
    }
 }
