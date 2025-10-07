@@ -16,6 +16,6 @@ internal class Program {
    /// <summary>Prints multiplication table with input num and num+1</summary>
    static void PrintTableTwice (int num) {
       for (int i = 1; i <= 10; i++)
-         Console.WriteLine ($"{num} * {i,2} = {num * i} \t {num + 1} * {i,2} = {(num + 1) * i}{(i is 10 ? "\n" : "")}");
+         Console.WriteLine ($"{num} * {i,2} = {num * i} \t {num + 1} * {i,2} = {(num + 1) * i}{(i == 10 ? "\n" : "")}");
    }
 }
