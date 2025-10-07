@@ -13,15 +13,15 @@ internal class Program {
       ValidatePassword ();
    }
 
-   /// <summary>Checks the validity of password and prints the result. The password should 
-   /// have atleast 1 digit, 1 uppercase, 1 lowercase, 1 special character and 6 characters. 
-   /// If it satisfies all criteria the password is strong else weak.</summary>
+   /// <summary>Checks the validity of password and prints the result.</summary>
+   /// The password should have atleast 1 digit, 1 uppercase, 1 lowercase, 1 special character
+   /// and 6 characters. If it satisfies all criteria the password is strong else weak.
    static void ValidatePassword () {
       for (; ; ) {
          Console.Write ("Enter password: ");
          var input = Console.ReadLine ();
          if (string.IsNullOrEmpty (input) || input.Any (a => a is ' ')) {
-            Console.WriteLine ("Please enter a valid password!!!\n");
+            Console.WriteLine ("Please enter a valid password!!!");
             continue;
          }
          Console.ForegroundColor = ConsoleColor.DarkRed;
@@ -33,11 +33,11 @@ internal class Program {
             if (!input.Any (char.IsLower)) result.Append (" 1 lower case");
             if (!spChars.Any (input.Contains)) result.Append (" 1 special character");
          } else result.Append (" 6 characters");
-         if (result.Length is 0) {
+         if (result.Length == 0) {
             Console.ForegroundColor = ConsoleColor.Green;
             result.Append ("Your password is strong");
-         } else result.Insert (0, "Your password is weak.\nIt should have atleast");
-         Console.WriteLine (result + "\n");
+         } else result.Insert (0, "Your password is weak." + Environment.NewLine + "It should have atleast");
+         Console.WriteLine (result);
          Console.ResetColor ();
       }
    }
