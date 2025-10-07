@@ -6,22 +6,18 @@
 // Program to print the nth Armstrong number.
 // ------------------------------------------------------------------------------------------------
 using System; //Required to run program in terminal
+using static System.Console;
 
 namespace Training25;
 internal class Program {
    static void Main (string[] args) {
-      PrintArmsNum (args);
-   }
-
-   /// <summary>Prints the nth Armstrong number</summary>
-   static void PrintArmsNum (string[] args) {
       int n = args.Length;
       if (n is 0)
-         Console.Write ("Enter a number between 1 and 25: ");
-      var input = n is 0 ? Console.ReadLine () : args[0];
-      if (int.TryParse (input, out int num) && num is > 0 and <= 25) {
-         Console.WriteLine ($"Armstrong num: {nArmstrong (num)}");
-      } else Console.WriteLine ("Please enter a valid number!!");
+         Write ("Enter a number between 1 and 25: ");
+      var input = n is 0 ? ReadLine () : args[0];
+      WriteLine (int.TryParse (input, out int num) && num is > 0 and <= 25 ?
+         $"Armstrong num: {NthArmstrong (num)}" :
+         "Please enter a valid number!!");
 
       /// <summary>Returns whether a number is Armstrong or not</summary>
       bool IsArmstrong (int num) {
@@ -34,7 +30,7 @@ internal class Program {
       }
 
       /// <summary>Returns the nth Armstrong number</summary>
-      int nArmstrong (int n) {
+      int NthArmstrong (int n) {
          int count = 0, num = 0;
          while (count < n) {
             if (IsArmstrong (num)) count++;
