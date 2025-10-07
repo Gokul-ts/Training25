@@ -6,31 +6,31 @@
 // Program to print the reverse of a string.
 // ------------------------------------------------------------------------------------------------
 using System.Text;
+using static System.Console;
 
 namespace Training25;
 internal class Program {
    static void Main () {
-      ReverseString ();
-   }
-
-   /// <summary>Prints the reverse of a string</summary>
-   static void ReverseString () {
       for (; ; ) {
-         Console.Write ("Enter a string input: ");
-         var input = Console.ReadLine ();
-         if (!string.IsNullOrEmpty (input)) {
-            var output = new StringBuilder ();
-            for (int i = input.Length - 1; i >= 0; i--)
-               if (input[i] is not ' ') output.Append (input[i]);
-            int j = 0;
-            foreach (char ch in input) {
-               if (ch is ' ') output.Insert (j, ' ');
-               else if (char.IsUpper (ch)) output[j] = char.ToUpper (output[j]);
-               else if (char.IsLower (ch)) output[j] = char.ToLower (output[j]);
-               j++;
-            }
-            Console.WriteLine ($"Reversed string: {output}");
-         } else Console.WriteLine ("Please enter a valid input!!");
+         Write ("Enter a string input: ");
+         var input = ReadLine ();
+         WriteLine (!string.IsNullOrEmpty (input) ?
+            $"Reversed string: {ReverseString (input)}" :
+            "Please enter a valid input!!");
+      }
+
+      /// <summary>Returns the reverse of a string</summary>
+      string ReverseString (string input) {
+         var output = new StringBuilder ();
+         for (int i = input.Length - 1; i >= 0; i--)
+            if (input[i] != ' ') output.Append (input[i]);
+         for (int j = 0; j < input.Length; j++) {
+            if (input[j] == ' ')
+               output.Insert (j, ' ');
+            else
+               output[j] = char.IsUpper (input[j]) ? char.ToUpper (output[j]) : char.ToLower (output[j]);
+         }
+         return output.ToString ();
       }
    }
 }
