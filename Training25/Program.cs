@@ -5,16 +5,17 @@
 // Program.cs
 // Program to print digital root of a number.
 // ------------------------------------------------------------------------------------------------
+using static System.Console;
+
 namespace Training25;
 internal class Program {
    static void Main () {
       for (; ; ) {
-         Console.Write ("Enter a positive integer: ");
-         string? input = Console.ReadLine ();
-         if (int.TryParse (input, out int num) && num > 0)
-            Console.WriteLine ($"Input: {input}\nDigitalRoot: {DigitalRoot (num)}\n");
-         else
-            Console.WriteLine ("Please enter a valid number!!!\n");
+         Write ("Enter a positive integer: ");
+         string? input = ReadLine ();
+         WriteLine (int.TryParse (input, out int num) && (num > 0) ?
+            $"Input: {input}\nDigitalRoot: {DigitalRoot (num)}" :
+            "Please enter a valid number!!!");
       }
    }
 
