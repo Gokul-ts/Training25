@@ -5,17 +5,18 @@
 // Program.cs
 // Program to convert a decimal into binary and hexadecimal.
 // ------------------------------------------------------------------------------------------------
+using static System.Console;
+
 namespace Training25;
 internal class Program {
    static void Main () {
       for (; ; ) {
-         Console.Write ("Enter a number or [X] to exit: ");
-         var input = Console.ReadLine ();
+         Write ("Enter a number or [X] to exit: ");
+         var input = ReadLine ();
          if (input?.ToUpper () == "X") Environment.Exit (0);
-         if (int.TryParse (input, out int num) && num >= 0)
-            Console.WriteLine ($"Input: {num}" + Environment.NewLine + $"HEX: {Hex (num)}"
-               + Environment.NewLine + $"Binary: {Binary (num)}");
-         else Console.WriteLine ("Please enter a valid input!!!");
+         WriteLine (int.TryParse (input, out int num) && (num >= 0) ?
+            $"Input: {num}\nHEX: {Hex (num)}\nBinary: {Binary (num)}" :
+            "Please enter a valid input!!!");
       }
 
       /// <summary>Returns the binary value of a number</summary>
