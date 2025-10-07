@@ -10,7 +10,7 @@ internal class Program {
    static void Main () {
       for (; ; ) {
          Console.Write ("Enter the number of rows (max 100): ");
-         if (int.TryParse (Console.ReadLine (), out int rowCnt) && rowCnt is > 0 and <= 100) {
+         if (int.TryParse (Console.ReadLine (), out int rowCnt) && rowCnt > 0 && rowCnt <= 100) {
             var rows = new int[rowCnt];
             for (int i = 0; i < rowCnt; i++) {
                for (int j = i; j > 0; j--) rows[j] = rows[j] + rows[j - 1];
