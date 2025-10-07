@@ -5,16 +5,20 @@
 // Program.cs
 // Program to calculate the LCM and GCD of two numbers.
 // ------------------------------------------------------------------------------------------------
+using static System.Console;
+
 namespace Training25;
 internal class Program {
    static void Main () {
       for (; ; ) {
-         Console.Write ("Enter two non-zero integers\nnum1: ");
-         var input1 = Console.ReadLine ();
-         Console.Write ("num2: ");
-         var input2 = Console.ReadLine ();
-         Console.WriteLine (int.TryParse (input1, out int num1) && int.TryParse (input2, out int num2)
-            && num1 > 0 && num2 > 0 ? $"LCM:  {LCM (num1, num2)}\nGCD:  {GCD (num1, num2)}\n" :
+         Write ("Enter two non-zero integers\nnum1: ");
+         var input1 = ReadLine ();
+         Write ("num2: ");
+         var input2 = ReadLine ();
+         WriteLine (int.TryParse (input1, out int num1) && (num1 > 0) &&
+            int.TryParse (input2, out int num2) && (num2 > 0) ?
+            $"LCM : {LCM (num1, num2)}\n" +
+            $"GCD : {GCD (num1, num2)}\n" :
             "Please enter a valid input!!!\n");
       }
 
