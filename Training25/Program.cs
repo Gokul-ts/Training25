@@ -3,27 +3,28 @@
 // Copyright (c) Metamation India.
 // ------------------------------------------------------------------
 // Program.cs
-// Program on main branch.
+// Program to reduce a string of lowercase characters by deleting a pair of adjacent letters that match.
 // ------------------------------------------------------------------------------------------------
+using static System.Console;
+
 namespace Training25;
 internal class Program {
    static void Main () {
-      ReducedString ();
-   }
-
-   /// <summary>Removes adjacent pair of lowercase letters from a string</summary>
-   static void ReducedString () {
       for (; ; ) {
-         Console.Write ("Enter a string input: ");
-         var input = Console.ReadLine ()?.ToLower ();
-         if (!string.IsNullOrEmpty (input) && !input.Any (a => char.IsDigit (a) || a is ' ')) {
-            int i = 0;
-            while (i < input.Length - 1) {
-               if (input[i] == input[i + 1]) input = input.Remove (i, 2);
-               else i++;
-            }
-            Console.WriteLine ($"Output: {(input.Length is 0 ? "Empty string" : input)}");
-         } else Console.WriteLine ("Please enter a valid input!!");
+         Write ("Enter a string input: ");
+         var input = ReadLine ()?.ToLower ();
+         WriteLine (!string.IsNullOrEmpty (input) && input.All (char.IsLetter) ?
+            $"Output: {ReducedString (input)}" :
+            "Please enter a valid input!!");
+      }
+
+      /// <summary>Removes adjacent pair of lowercase letters from a string.</summary>
+      string ReducedString (string input) {
+         for (int i = 0; i < input.Length - 1;) {
+            if (input[i] == input[i + 1]) input = input.Remove (i, 2);
+            else i++;
+         }
+         return input == "" ? "Empty string" : input;
       }
    }
 }
