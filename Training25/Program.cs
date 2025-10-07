@@ -6,11 +6,12 @@
 // Program to print chess board with pieces.
 // ------------------------------------------------------------------------------------------------
 using System.Text;
+using static System.Console;
 
 namespace Training25;
 internal class Program {
    static void Main () {
-      Console.OutputEncoding = new UnicodeEncoding ();
+      OutputEncoding = new UnicodeEncoding ();
       PrintChessBoard ();
    }
 
@@ -19,30 +20,21 @@ internal class Program {
       string[] whitePieces = { "\u2656", "\u2658", "\u2657", "\u2655", "\u2654" },
                blackPieces = { "\u265C", "\u265E", "\u265D", "\u265B", "\u265A" };
       string whitePawn = "\u2659", blackPawn = "\u265F";
-      Console.WriteLine ("┏━━━┳━━━┳━━━┳━━━┳━━━┳━━━┳━━━┳━━━┓");
+      WriteLine ("┏━━━┳━━━┳━━━┳━━━┳━━━┳━━━┳━━━┳━━━┓");
       for (int row = 0; row < 8; row++) {
-         Console.Write ("┃");
+         Write ("┃");
          for (int col = 0; col < 8; col++) {
-            switch (row) {
-               case 0:
-                  Console.Write (" " + (col > 4 ? blackPieces[7 - col] : blackPieces[col]) + " ┃");
-                  break;
-               case 1:
-                  Console.Write (" " + blackPawn + " ┃");
-                  break;
-               case 6:
-                  Console.Write (" " + whitePawn + " ┃");
-                  break;
-               case 7:
-                  Console.Write (" " + (col > 4 ? whitePieces[7 - col] : whitePieces[col]) + " ┃");
-                  break;
-               default:
-                  Console.Write ("   ┃");
-                  break;
-            }
+            string cellContent = row switch {
+               0 => $" {(col > 4 ? blackPieces[7 - col] : blackPieces[col])} ┃",
+               1 => $" {blackPawn} ┃",
+               6 => $" {whitePawn} ┃",
+               7 => $" {(col > 4 ? whitePieces[7 - col] : whitePieces[col])} ┃",
+               _ => "   ┃"
+            };
+            Write (cellContent);
          }
-         if (row < 7) Console.Write ("\n┣━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━┫\n");
+         if (row < 7) Write ("\n┣━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━┫\n");
       }
-      Console.Write ("\n┗━━━┻━━━┻━━━┻━━━┻━━━┻━━━┻━━━┻━━━┛\nLet's play chess!! \u265B");
+      Write ("\n┗━━━┻━━━┻━━━┻━━━┻━━━┻━━━┻━━━┻━━━┛\nLet's play chess!! \u265B");
    }
 }
