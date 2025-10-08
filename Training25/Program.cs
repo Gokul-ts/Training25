@@ -5,21 +5,35 @@
 // Program.cs
 // Program to print pascal's triangle for given number of rows.
 // ------------------------------------------------------------------------------------------------
+using static System.Console;
+
 namespace Training25;
 internal class Program {
    static void Main () {
       for (; ; ) {
-         Console.Write ("Enter the number of rows (max 100): ");
-         if (int.TryParse (Console.ReadLine (), out int rowCnt) && rowCnt > 0 && rowCnt <= 100) {
+         Write ("Enter the number of rows (max 100): ");
+         if (int.TryParse (ReadLine (), out int rowCnt) && rowCnt > 0 && rowCnt <= 100) {
             var rows = new int[rowCnt];
+            int max = 1;
             for (int i = 0; i < rowCnt; i++) {
-               for (int j = i; j > 0; j--) rows[j] = rows[j] + rows[j - 1];
+               for (int j = i; j > 0; j--)
+                  rows[j] += rows[j - 1];
                rows[0] = 1;
-               Console.Write (new string (' ', (rowCnt - i) * 2));
-               for (int j = 0; j <= i; j++) Console.Write ($"{rows[j],4}");
-               Console.WriteLine ();
             }
-         } else Console.WriteLine ("Please enter a valid number!!!\n");
+            foreach (var num in rows)
+               if (num > max) max = num;
+            int width = max.ToString ().Length + 2; // width of max number + 2 spaces
+            Array.Clear (rows, 0, rowCnt);
+            for (int i = 0; i < rowCnt; i++) {
+               for (int j = i; j > 0; j--)
+                  rows[j] += rows[j - 1];
+               rows[0] = 1;
+               Write (new string (' ', ((rowCnt - i - 1) * width) / 2));
+               for (int j = 0; j <= i; j++)
+                  Write (rows[j].ToString ().PadLeft (width));
+               WriteLine ();
+            }
+         } else WriteLine ("Please enter a valid number!!!\n");
       }
    }
 }
