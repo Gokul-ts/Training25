@@ -15,10 +15,10 @@ internal class Program {
    [Flags]
    enum EFlags {
       None = 0,
-      HasDigit = 1,
-      HasUpper = 2,
-      HasLower = 4,
-      HasSpecial = 8
+      Digit = 1,
+      Upper = 2,
+      Lower = 4,
+      Special = 8
    }
 
    static void Main () {
@@ -38,32 +38,31 @@ internal class Program {
    static string ValidatePassword (string input) {
       string spChars = "!@#$%^&*()-+";
       ForegroundColor = ConsoleColor.DarkRed;
-      var result = new StringBuilder ("Your password is weak.\nIt should have at least");
       if (input.Length < 6) {
-         result.Append (" 6 characters");
-         return result.ToString ();
+         return "Your password is weak.\nIt should have at least 6 characters";
       }
       EFlags criteria = EFlags.None;
       foreach (char c in input) {
          criteria |= c switch {
-            _ when char.IsDigit (c) => EFlags.HasDigit,
-            _ when char.IsUpper (c) => EFlags.HasUpper,
-            _ when char.IsLower (c) => EFlags.HasLower,
-            _ when spChars.Contains (c) => EFlags.HasSpecial,
+            _ when char.IsDigit (c) => EFlags.Digit,
+            _ when char.IsUpper (c) => EFlags.Upper,
+            _ when char.IsLower (c) => EFlags.Lower,
+            _ when spChars.Contains (c) => EFlags.Special,
             _ => EFlags.None
          };
-         if (criteria == (EFlags.HasDigit | EFlags.HasUpper | EFlags.HasLower | EFlags.HasSpecial)) {
+         if (criteria == (EFlags.Digit | EFlags.Upper | EFlags.Lower | EFlags.Special)) {
             ForegroundColor = ConsoleColor.Green;
             return "Your password is strong";
          }
       }
+      var result = new StringBuilder ("Your password is weak.\nIt should have at least");
       foreach (EFlags flag in Enum.GetValues (typeof (EFlags))) {
          if (criteria.HasFlag (flag)) continue;
          string message = flag switch {
-            EFlags.HasDigit => " 1 digit",
-            EFlags.HasUpper => " 1 upper case",
-            EFlags.HasLower => " 1 lower case",
-            EFlags.HasSpecial => " 1 special character",
+            EFlags.Digit => " 1 digit",
+            EFlags.Upper => " 1 upper case",
+            EFlags.Lower => " 1 lower case",
+            EFlags.Special => " 1 special character",
             _ => ""
          };
          if (!string.IsNullOrEmpty (message))
