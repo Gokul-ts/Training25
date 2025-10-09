@@ -5,7 +5,6 @@
 // Program.cs
 // Program to print the reverse of a string.
 // ------------------------------------------------------------------------------------------------
-using System.Text;
 using static System.Console;
 
 namespace Training25;
@@ -15,22 +14,24 @@ internal class Program {
          Write ("Enter a string input: ");
          var input = ReadLine ();
          WriteLine (!string.IsNullOrEmpty (input) ?
-            $"Reversed string: {ReverseString (input)}" :
+            $"Reversed string{":",6} {ReverseString (input)}" :
             "Please enter a valid input!!");
       }
 
       /// <summary>Returns the reverse of a string</summary>
       string ReverseString (string input) {
-         var output = new StringBuilder ();
-         for (int i = input.Length - 1; i >= 0; i--)
-            if (input[i] != ' ') output.Append (input[i]);
-         for (int j = 0; j < input.Length; j++) {
-            if (input[j] == ' ')
-               output.Insert (j, ' ');
-            else
-               output[j] = char.IsUpper (input[j]) ? char.ToUpper (output[j]) : char.ToLower (output[j]);
+         ReadOnlySpan<char> span = input;
+         int length = span.Length;
+         char[] result = new char[length];
+         for (int i = 0, revIndex = length - 1; i < length; i++) {
+            if (span[i] == ' ') result[i] = ' ';
+            else {
+               while (revIndex >= 0 && span[revIndex] == ' ') revIndex--;
+               char c = span[revIndex--];
+               result[i] = char.IsUpper (span[i]) ? char.ToUpper (c) : char.ToLower (c);
+            }
          }
-         return output.ToString ();
+         return new string (result);
       }
    }
 }
