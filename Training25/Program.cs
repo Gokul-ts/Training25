@@ -12,9 +12,9 @@ internal class Program {
    static void Main () {
       for (; ; ) {
          Write ("Enter a string input: ");
-         var input = ReadLine ()?.ToLower ();
-         WriteLine (!string.IsNullOrEmpty (input) && input.All (char.IsLetter) ?
-            $"Output: {ReducedString (input)}" :
+         var input = ReadLine ();
+         WriteLine (!string.IsNullOrEmpty (input) && input.Trim ().All (char.IsLower) ?
+            $"Output: {ReducedString (input.Trim ())}" :
             "Please enter a valid input!!");
       }
 
