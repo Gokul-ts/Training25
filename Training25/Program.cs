@@ -12,19 +12,19 @@ internal class Program {
    static void Main () {
       for (; ; ) {
          Write ("Enter a string input: ");
-         var input = ReadLine ();
-         WriteLine (!string.IsNullOrEmpty (input) && input.Trim ().All (char.IsLower) ?
-            $"Output: {ReducedString (input.Trim ())}" :
+         var input = ReadLine ()?.Trim ();
+         WriteLine (!string.IsNullOrEmpty (input) && input.All (char.IsLower) ?
+            $"Output: {ReducedString (input)}" :
             "Please enter a valid input!!");
       }
+   }
 
-      /// <summary>Removes adjacent pair of lowercase letters from a string.</summary>
-      string ReducedString (string input) {
-         for (int i = 0; i < input.Length - 1;) {
-            if (input[i] == input[i + 1]) input = input.Remove (i, 2);
-            else i++;
-         }
-         return input == "" ? "Empty string" : input;
+   /// <summary>Removes adjacent pair of lowercase letters from a string.</summary>
+   static string ReducedString (string input) {
+      for (int i = 0; i < input.Length - 1;) {
+         if (input[i] == input[i + 1]) input = input.Remove (i, 2);
+         else i++;
       }
+      return input == "" ? "Empty string" : input;
    }
 }
