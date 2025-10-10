@@ -20,7 +20,8 @@ internal class Program {
 
    /// <summary>Returns whether the number is Armstrong or not </summary>
    static bool IsArmstrong (int num) {
-      double sum = 0, org = num, pow = num.ToString ().Length;
+      double sum = 0, org = num, pow = 0;
+      for (int temp = num; temp > 0; temp /= 10) pow++;
       while (num > 0) {
          sum += Math.Pow (num % 10, pow);
          num /= 10;
