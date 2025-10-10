@@ -24,14 +24,14 @@ internal class Program {
             $"\nSorted array: {SortAndSwap (inpArr, spChar, order)}" :
             "\nPlease enter a valid input!!");
       }
+   }
 
-      /// <summary>Returns the sorted array with special character at the end.</summary>
-      string SortAndSwap (string inpArr, char spChar, ConsoleKey order) {
-         var spChars = inpArr.Where (a => a == char.ToUpper (spChar) || a == char.ToLower (spChar));
-         var sortArr = inpArr.Where (a => !spChars.Contains (a));
-         sortArr = order is ConsoleKey.D ? sortArr.OrderDescending () : sortArr.Order ();
-         sortArr = sortArr.Concat (spChars.Any () ? spChars : Enumerable.Empty<char> ());
-         return string.Concat (sortArr);
-      }
+   /// <summary>Returns the sorted array with special character at the end.</summary>
+   static string SortAndSwap (string inpArr, char spChar, ConsoleKey order) {
+      var spChars = inpArr.Where (a => a == char.ToUpper (spChar) || a == char.ToLower (spChar));
+      var sortArr = inpArr.Where (a => !spChars.Contains (a));
+      sortArr = order is ConsoleKey.D ? sortArr.OrderDescending () : sortArr.Order ();
+      sortArr = sortArr.Concat (spChars.Any () ? spChars : Enumerable.Empty<char> ());
+      return string.Concat (sortArr);
    }
 }
