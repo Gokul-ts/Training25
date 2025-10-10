@@ -17,20 +17,22 @@ internal class Program {
             $"Minimum steps to transform: {Transform (num)}" :
             "Please enter a valid number!!");
       }
+   }
 
-      /// <summary>Returns the minimum no. of steps required to transform an integer.</summary>
-      int Transform (int num) {
-         int minSteps = int.MaxValue;
-         var digits = num.ToString ().Distinct ().Select (c => c - '0').ToList ();
-         foreach (int target in digits) {
-            int temp = num, steps = 0;
-            for (; temp > 0; temp /= 10) {
-               int digit = temp % 10;
-               steps += digit > target ? digit - target : target - digit;
-            }
-            if (steps < minSteps) minSteps = steps;
+   /// <summary>Returns the minimum no. of steps required to transform an integer.</summary>
+   static int Transform (int num) {
+      int minSteps = int.MaxValue;
+      HashSet<int> digits = new ();
+      for (int temp = num; temp > 0; temp /= 10)
+         digits.Add (temp % 10);
+      foreach (int target in digits) {
+         int temp = num, steps = 0;
+         for (; temp > 0; temp /= 10) {
+            int digit = temp % 10;
+            steps += digit > target ? digit - target : target - digit;
          }
-         return minSteps;
+         if (steps < minSteps) minSteps = steps;
       }
+      return minSteps;
    }
 }
