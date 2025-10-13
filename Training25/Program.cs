@@ -14,19 +14,21 @@ internal class Program {
          Write ("Enter a string: ");
          var input = ReadLine ();
          WriteLine (!string.IsNullOrEmpty (input) && input.All (char.IsLetter) ?
-            $"Winner: {FindWinner (input).Key} Votes: {FindWinner (input).Value}" :
+            $"Winner: {FindWinner (input, out int votes)} Votes: {votes}" :
             "Please enter a valid input");
       }
 
       /// <summary>Returns the winner with maximum number of votes.</summary> 
-      static KeyValuePair<char, int> FindWinner (string input) {
+      static char FindWinner (string input, out int maxVotes) {
          Dictionary<char, int> voteData = new ();
          string votes = input.ToUpper ();
          foreach (char c in votes)
-            if (voteData.Keys.Contains (c)) voteData[c]++;
-            else voteData.Add (c, 1);
-         var winners = voteData.Where (a => a.Value == voteData.Values.Max ());
-         return winners.First ();
+            if (voteData.ContainsKey (c)) voteData[c]++;
+            else voteData[c] = 1;
+         int max = voteData.Values.Max ();
+         var winners = voteData.Where (a => a.Value == max);
+         maxVotes = max;
+         return winners.First ().Key;
       }
    }
 }
