@@ -9,11 +9,10 @@ using static System.Console;
 
 namespace Training25;
 internal class Program {
-   static void Main (string[] args) {
+   static void Main () {
       for (; ; ) {
          Write ("Enter a number: ");
-         var input = ReadLine ();
-         WriteLine (int.TryParse (input, out int num) && num > 0 ?
+         WriteLine (int.TryParse (ReadLine (), out int num) && num > 0 ?
             $"Minimum steps to transform: {Transform (num)}" :
             "Please enter a valid number!!");
       }
@@ -29,9 +28,9 @@ internal class Program {
          int temp = num, steps = 0;
          for (; temp > 0; temp /= 10) {
             int digit = temp % 10;
-            steps += digit > target ? digit - target : target - digit;
+            steps += Math.Abs (digit - target);
          }
-         if (steps < minSteps) minSteps = steps;
+         minSteps = Math.Min (steps, minSteps);
       }
       return minSteps;
    }
