@@ -21,10 +21,13 @@ internal class Program {
 
    /// <summary>Removes adjacent pair of lowercase letters from a string.</summary>
    static string ReducedString (string input) {
-      for (int i = 0; i < input.Length - 1;) {
-         if (input[i] == input[i + 1]) input = input.Remove (i, 2);
-         else i++;
-      }
-      return input == "" ? "Empty string" : input;
+      Span<char> span = input.ToCharArray ();
+      int j = 0;
+      for (int i = 0; i < span.Length; i++)
+         if (j > 0 && span[j - 1] == span[i])
+            j--;
+         else
+            span[j++] = span[i];
+      return j == 0 ? "Empty string" : new string (span.Slice (0, j));
    }
 }
