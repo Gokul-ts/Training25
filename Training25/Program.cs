@@ -14,24 +14,34 @@ internal class Program {
    static void Main () {
       for (; ; ) {
          Write ("Enter the character array: ");
-         var inpArr = ReadLine ();
+         var input = ReadLine ();
          Write ("Enter special character: ");
          var spChar = ReadKey ().KeyChar;
          Write ("\nEnter [A]scending or [D]escending: ");
          var order = ReadKey ().Key;
-         WriteLine ((!string.IsNullOrEmpty (inpArr) && inpArr.All (char.IsLetter) && char.IsLetter (spChar) &&
-            order is ConsoleKey.D or ConsoleKey.A or ConsoleKey.Enter) ?
-            $"\nSorted array: {SortAndSwap (inpArr, spChar, order)}" :
+         WriteLine (!string.IsNullOrEmpty (input) && input.All (char.IsLetter) && char.IsLetter (spChar) &&
+            order is ConsoleKey.D or ConsoleKey.A or ConsoleKey.Enter ?
+            $"\nSorted array: {new string (SortAndSwap (input, spChar, order))}" :
             "\nPlease enter a valid input!!");
       }
    }
 
-   /// <summary>Returns the sorted array with special character at the end.</summary>
-   static string SortAndSwap (string inpArr, char spChar, ConsoleKey order) {
-      var spChars = inpArr.Where (a => a == char.ToUpper (spChar) || a == char.ToLower (spChar));
-      var sortArr = inpArr.Where (a => !spChars.Contains (a));
-      sortArr = order is ConsoleKey.D ? sortArr.OrderDescending () : sortArr.Order ();
-      sortArr = sortArr.Concat (spChars.Any () ? spChars : Enumerable.Empty<char> ());
-      return string.Concat (sortArr);
+   /// <summary>Outputs sorted array with special character at the end.</summary>
+   static char[] SortAndSwap (ReadOnlySpan<char> inpSpan, char spChar, ConsoleKey order) {
+      var (lower, upper) = (char.ToLower (spChar), char.ToUpper (spChar));
+      char[] output = new char[inpSpan.Length];
+      int index = FilterOrAppend (inpSpan, c => c != lower && c != upper, output); // Filter normal characters
+      Array.Sort (output, 0, index, Comparer<char>.Create ((a, b) => order is ConsoleKey.D ? b.CompareTo (a) : a.CompareTo (b)));
+      FilterOrAppend (inpSpan, c => c == lower || c == upper, output, index); // Append special characters
+      return output;
+
+      // Local function to filter or append characters based on a condition
+      int FilterOrAppend (ReadOnlySpan<char> input, Func<char, bool> condition, char[] target, int startIndex = 0) {
+         int i = startIndex;
+         foreach (char c in input)
+            if (condition (c))
+               target[i++] = c;
+         return i;
+      }
    }
 }
