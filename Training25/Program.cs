@@ -12,16 +12,18 @@ internal class Program {
          Console.Write ("Enter a number between 0 and 3999 or [X] to exit: ");
          string? input = Console.ReadLine ();
          if (input?.ToUpper () == "X") Environment.Exit (0);
-         if (int.TryParse (input, out int num) && num is >= 0 and < 4000) {
-            for (; ; ) {
-               Console.Write ("Do you want to convert it into (W)ords or (R)oman Numbers? : ");
-               var choice = Console.ReadKey ().Key;
-               if (choice is ConsoleKey.W or ConsoleKey.R) {
-                  Console.WriteLine ($"\nNumber: {num}\n" + (choice == ConsoleKey.W ? $"Words: {ToWords (num)}\n" : $"Roman:  {ToRoman (num)}\n"));
-                  break;
-               } else Console.WriteLine ("\nPlease enter a valid Key!!!");
-            }
-         } else Console.WriteLine ("Please enter a valid number!!!\n");
+         if (!int.TryParse (input, out int num) || num <= 0 || num > 3999) {
+            Console.WriteLine ("Please enter a valid number!!!\n");
+            continue;
+         }
+         for (; ; ) {
+            Console.Write ("Do you want to convert it into (W)ords or (R)oman Numbers? : ");
+            var choice = Console.ReadKey ().Key;
+            if (choice is ConsoleKey.W or ConsoleKey.R) {
+               Console.WriteLine ($"\nNumber: {num}\n" + (choice == ConsoleKey.W ? $"Words: {ToWords (num)}\n" : $"Roman:  {ToRoman (num)}\n"));
+               break;
+            } else Console.WriteLine ("\nPlease enter a valid Key!!!");
+         }
       }
    }
 
