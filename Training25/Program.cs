@@ -21,17 +21,17 @@ internal class Program {
          var order = ReadKey ().Key;
          WriteLine (!string.IsNullOrEmpty (input) && input.All (char.IsLetter) && char.IsLetter (spChar) &&
             order is ConsoleKey.D or ConsoleKey.A or ConsoleKey.Enter ?
-            $"\nSorted array: {new string (SortAndSwap (input, spChar, order))}" :
+            $"\nSorted array: {new string (SortAndSwap (input, spChar, order is not ConsoleKey.D))}" :
             "\nPlease enter a valid input!!");
       }
    }
 
    /// <summary>Outputs sorted array with special character at the end.</summary>
-   static char[] SortAndSwap (ReadOnlySpan<char> inpSpan, char spChar, ConsoleKey order) {
+   static char[] SortAndSwap (ReadOnlySpan<char> inpSpan, char spChar, bool isAscending) {
       var (lower, upper) = (char.ToLower (spChar), char.ToUpper (spChar));
       char[] output = new char[inpSpan.Length];
       int index = FilterOrAppend (inpSpan, c => c != lower && c != upper, output); // Filter normal characters
-      Array.Sort (output, 0, index, Comparer<char>.Create ((a, b) => order is ConsoleKey.D ? b.CompareTo (a) : a.CompareTo (b)));
+      Array.Sort (output, 0, index, Comparer<char>.Create ((a, b) => isAscending ? a.CompareTo (b) : b.CompareTo (a)));
       FilterOrAppend (inpSpan, c => c == lower || c == upper, output, index); // Append special characters
       return output;
 
