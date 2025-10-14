@@ -31,6 +31,7 @@ internal class Program {
       var (lower, upper) = (char.ToLower (spChar), char.ToUpper (spChar));
       char[] output = new char[inpSpan.Length];
       int index = FilterOrAppend (inpSpan, c => c != lower && c != upper, output); // Filter normal characters
+      // Sorts the filtered characters either in ascending or descending order
       Array.Sort (output, 0, index, Comparer<char>.Create ((a, b) => isAscending ? a.CompareTo (b) : b.CompareTo (a)));
       FilterOrAppend (inpSpan, c => c == lower || c == upper, output, index); // Append special characters
       return output;
