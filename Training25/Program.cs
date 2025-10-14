@@ -20,15 +20,14 @@ internal class Program {
 
       /// <summary>Returns the winner with maximum number of votes.</summary> 
       static char FindWinner (string input, out int maxVotes) {
-         Dictionary<char, int> voteData = new ();
+         Dictionary<char, int> voteData = [];
          string votes = input.ToUpper ();
          foreach (char c in votes)
             if (voteData.ContainsKey (c)) voteData[c]++;
             else voteData[c] = 1;
-         int max = voteData.Values.Max ();
-         var winners = voteData.Where (a => a.Value == max);
-         maxVotes = max;
-         return winners.First ().Key;
+         var winner = voteData.MaxBy (a => a.Value);
+         maxVotes = winner.Value;
+         return winner.Key;
       }
    }
 }
