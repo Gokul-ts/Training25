@@ -28,14 +28,17 @@ internal class Program {
          count++;
       }
       foreach (int target in digits) {
-         int steps = digits.Sum (d => Math.Abs (d - target));
-         if (steps < minSteps) {
-            minSteps = steps;
-            bestTarget = target;
+         int temp = num, steps = 0;
+         for (; temp > 0; temp /= 10) {
+            int digit = temp % 10;
+            steps += Math.Abs (digit - target);
          }
+         if (steps < minSteps) bestTarget = target;
+         minSteps = Math.Min (steps, minSteps);
       }
       // long is used here to handle edge cases where int overflows
-      bestTarget = long.Parse (string.Concat (Enumerable.Repeat (bestTarget, count)));
+      for (int i = 0; i < count - 1; i++)
+         bestTarget = bestTarget * 10 + bestTarget % 10;
       return minSteps;
    }
 }
