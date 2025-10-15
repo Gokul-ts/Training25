@@ -37,8 +37,7 @@ internal class Program {
          minSteps = Math.Min (steps, minSteps);
       }
       // long is used here to handle edge cases where int overflows
-      for (int i = 0; i < count - 1; i++)
-         bestTarget = bestTarget * 10 + bestTarget % 10;
+      bestTarget = bestTarget * ((long)(Math.Pow (10, count) - 1) / 9);
       return minSteps;
    }
 }
