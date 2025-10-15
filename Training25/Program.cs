@@ -20,12 +20,14 @@ internal class Program {
 
    /// <summary>Returns the minimum no. of steps and the transformed number.</summary>
    static int Transform (int num, out long bestTarget) {
-      int minSteps = int.MaxValue;
+      int minSteps = int.MaxValue, count = 0;
       bestTarget = 0;
-      List<int> digits = [];
-      for (int temp = num; temp > 0; temp /= 10)
+      HashSet<int> digits = [];
+      for (int temp = num; temp > 0; temp /= 10) {
          digits.Add (temp % 10);
-      foreach (int target in digits.Distinct ()) {
+         count++;
+      }
+      foreach (int target in digits) {
          int steps = digits.Sum (d => Math.Abs (d - target));
          if (steps < minSteps) {
             minSteps = steps;
@@ -33,7 +35,7 @@ internal class Program {
          }
       }
       // long is used here to handle edge cases where int overflows
-      bestTarget = long.Parse (string.Concat (Enumerable.Repeat (bestTarget, digits.Count)));
+      bestTarget = long.Parse (string.Concat (Enumerable.Repeat (bestTarget, count)));
       return minSteps;
    }
 }
