@@ -12,22 +12,22 @@ internal class Program {
          Console.Write ("Enter a number between 0 and 3999 or [X] to exit: ");
          string? input = Console.ReadLine ();
          if (input?.ToUpper () == "X") Environment.Exit (0);
-         if (!int.TryParse (input, out int num) || num <= 0 || num > 3999) {
-            Console.WriteLine ("Please enter a valid number!!!\n");
+         if (!int.TryParse (input, out int num) || num < 0 || num > 3999) {
+            Console.WriteLine ("Please enter a valid number!!!");
             continue;
          }
          for (; ; ) {
             Console.Write ("Do you want to convert it into (W)ords or (R)oman Numbers? : ");
             var choice = Console.ReadKey ().Key;
             if (choice is ConsoleKey.W or ConsoleKey.R) {
-               Console.WriteLine ($"\nNumber: {num}\n" + (choice == ConsoleKey.W ? $"Words: {ToWords (num)}\n" : $"Roman:  {ToRoman (num)}\n"));
+               Console.WriteLine ($"\nNumber: {num}\n" + (choice == ConsoleKey.W ? $"Words: {ToWords (num)}" : $"Roman:  {ToRoman (num)}"));
                break;
             } else Console.WriteLine ("\nPlease enter a valid Key!!!");
          }
       }
    }
 
-   /// <summary>Converts number into words</summary>
+   /// <summary>Returns the number in words</summary>
    static string ToWords (int num) {
       if (num == 0) return " Zero";
       Dictionary<int, string> eWords = new () {
@@ -39,7 +39,7 @@ internal class Program {
       };
       string words = "";
       foreach (var key in eWords.Keys) {
-         int temp = num / key; // Holds the multiples
+         int temp = num / key;
          if (temp > 0) {
             words += (key >= 100 ? eWords[temp] : "") + eWords[key];
             num %= key;
@@ -48,7 +48,7 @@ internal class Program {
       return words;
    }
 
-   /// <summary>Converts number into roman numerals</summary>
+   /// <summary>Returns the number in roman numerals</summary>
    static string ToRoman (int num) {
       if (num == 0) return "Nil";
       string roman = "";
