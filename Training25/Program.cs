@@ -3,7 +3,7 @@
 // Copyright (c) Metamation India.
 // ------------------------------------------------------------------
 // Program.cs
-// Program on main branch.
+// Program to return the sorted number by even and odd in ascending order.
 // ------------------------------------------------------------------------------------------------
 using static System.Console;
 
