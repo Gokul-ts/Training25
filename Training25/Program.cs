@@ -3,12 +3,14 @@
 // Copyright (c) Metamation India.
 // ------------------------------------------------------------------
 // Program.cs
-// Program on main branch.
+// Program to check whether the square is magic or not.
 // ------------------------------------------------------------------------------------------------
 using static System.Console;
 
 namespace Training25;
 internal class Program {
+   const int row = 3;
+
    static void Main (string[] args) {
       for (; ; ) {
          Write ("Enter the elements of list row-wise: ");
@@ -18,7 +20,7 @@ internal class Program {
          } else WriteLine ("Enter a valid num!!");
       }
    }
-   const int row = 3;
+
    static bool IsMagicSquare (int num) {
       int[] row1 = new int[row];
       int[] row2 = new int[row];
@@ -31,17 +33,12 @@ internal class Program {
          }
       }
       int sum = row1[0] + row1[1] + row1[2];
-
-      if (row2[0] + row2[1] + row2[2] != sum
-         || row3[0] + row3[1] + row3[2] != sum
-         || row1[0] + row2[0] + row3[0] != sum
-         || row1[1] + row2[1] + row3[1] != sum
-         || row1[2] + row2[2] + row3[2] != sum
-         || row1[0] + row2[1] + row3[2] != sum
-         || row1[2] + row2[1] + row3[0] != sum
-         ) {
-         return false;
-      }
-      return true;
+      return (row2[0] + row2[1] + row2[2] == sum
+           && row3[0] + row3[1] + row3[2] == sum
+           && row1[0] + row2[0] + row3[0] == sum
+           && row1[1] + row2[1] + row3[1] == sum
+           && row1[2] + row2[2] + row3[2] == sum
+           && row1[0] + row2[1] + row3[2] == sum
+           && row1[2] + row2[1] + row3[0] == sum);
    }
 }
