@@ -3,56 +3,46 @@
 // Copyright (c) Metamation India.
 // ------------------------------------------------------------------
 // Program.cs
-// Program on main branch.
+// Program to find the words that match with input.
 // ------------------------------------------------------------------------------------------------
 using static System.Console;
 
 namespace Training25;
 internal class Program {
-   static void Main (string[] args) {
+   static string seed = "";
+   static void Main () {
+      var words = File.ReadAllLines (@"C:\etc\words.txt");
       for (; ; ) {
-         var mode = GetMode ();
-         int max = GetMax (mode);
-         int secretNum = new Random ().Next (1, max + 1);
-         WriteLine ($"Guess a number between 1 and {max}: ");
-         for (; ; ) {
-            Write ("> ");
-            var input = ReadLine ();
-            if (!int.TryParse (input, out int num) || num <= 0 || num > max) {
-               WriteLine ("Enter a valid number!!");
-               continue;
+         Write ("Enter 7 letters starting with significant one: ");
+         var input = ReadLine ()?.Trim ();
+         if (!string.IsNullOrEmpty (input) && input.All (char.IsLetter) && input.Distinct ().Count () == 7) {
+            seed = input;
+            List<(string word, int score)> pairs = [];
+            foreach (var word in words) {
+               if (IsValid (word))
+                  pairs.Add ((word, GetScore (word)));
             }
-            Guess guess = GuessNum (num, secretNum);
-            WriteLine ($"Your guess is {guess}");
-            if (guess == Guess.Correct) break;
-         }
+            int totalScore = 0;
+            foreach (var pair in pairs) {
+               if (IsPangram (pair.word))
+                  ForegroundColor = ConsoleColor.Green;
+               WriteLine ($"{pair.score,5} {pair.word}");
+               ResetColor ();
+               totalScore += pair.score;
+            }
+            WriteLine ($"------\n{totalScore,5} Total");
+         } else WriteLine ("Please enter a valid input!!");
       }
    }
 
-   enum Mode { Easy, Medium, Hard }
-   enum Guess { Low, High, Correct }
+   static bool IsValid (string word)
+      => word.Length > 4 && word.Contains (seed[0]) && word.All (seed.Contains);
 
-   static Guess GuessNum (int num, int secretNum) {
-      if (num < secretNum) return Guess.Low;
-      if (num > secretNum) return Guess.High;
-      return Guess.Correct;
-   }
+   static bool IsPangram (string word)
+      => seed.All (word.Contains);
 
-   static int GetMax (Mode mode) {
-      return mode switch {
-         Mode.Easy => 10,
-         Mode.Medium => 100,
-         _ => 1000,
-      };
-   }
-
-   static Mode GetMode () {
-      WriteLine ("Enter mode [E]asy, [M]edium, [H]ard: ");
-      for (; ; ) {
-         var key = ReadKey (true).Key;
-         if (key == ConsoleKey.E) return Mode.Easy;
-         if (key == ConsoleKey.M) return Mode.Medium;
-         if (key == ConsoleKey.H) return Mode.Hard;
-      }
+   static int GetScore (string word) {
+      int length = word.Length;
+      return (length == 4) ? 1 : IsPangram (word) ? length + 7 : length;
    }
 }
