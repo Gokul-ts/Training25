@@ -3,38 +3,57 @@
 // Copyright (c) Metamation India.
 // ------------------------------------------------------------------
 // Program.cs
-// Program on main branch.
+// Program to guess a random number between a range.
 // ------------------------------------------------------------------------------------------------
+using static System.Console;
+
 namespace Training25;
 internal class Program {
    static void Main (string[] args) {
-      Console.WriteLine ("*****Number guessing game*****\n");
-      int rNum = new System.Random ().Next (1, 101);
-      GuessNumber (rNum);
-   }
-   static void GuessNumber (int rNum) {
-      int attempts = 0;
       for (; ; ) {
-         Console.Write ("Enter a number between 1-100: ");
-         string? guess = Console.ReadLine ();
-         if (guess != null) {
-            attempts++;
-            if (int.TryParse (guess, out int inputNum)) {
-               if (inputNum is < 1 or > 100) {
-                  Console.WriteLine ("Please enter between 1 and 100!!!");
-                  continue;
-               }
-               if (inputNum != rNum)
-                  Console.WriteLine ($"Your guess is {(inputNum < rNum ? "lower" : "higher")}");
-               else {
-                  Console.ForegroundColor = ConsoleColor.Green;
-                  Console.WriteLine ("Your guess is correct");
-                  Console.ResetColor ();
-                  break;
-               }
-            } else Console.WriteLine ("Please enter a valid number!!!");
-         } else { Console.WriteLine ("\nFailed to read input"); break; }
+         int max = GetMax (GetMode ());
+         int secretNum = new Random ().Next (1, max + 1);
+         WriteLine ($"Guess a number between 1 and {max}: ");
+         for (; ; ) {
+            Write ("> ");
+            if (!int.TryParse (ReadLine (), out int num) || num <= 0 || num > max) {
+               WriteLine ("Enter a valid number!!");
+               continue;
+            }
+            Guess guess = GuessNum (num, secretNum);
+            WriteLine ($"Your guess is {guess}");
+            if (guess == Guess.Correct) break;
+         }
       }
-      Console.WriteLine ($"Attempts taken: {attempts}");
+   }
+
+   enum Mode { Easy, Medium, Hard }
+   enum Guess { Low, High, Correct }
+
+   static Guess GuessNum (int num, int secretNum) {
+      return num switch {
+         _ when num < secretNum => Guess.Low,
+         _ when num > secretNum => Guess.High,
+         _ => Guess.Correct,
+      };
+   }
+
+   static int GetMax (Mode mode) {
+      return mode switch {
+         Mode.Easy => 10,
+         Mode.Medium => 100,
+         _ => 1000,
+      };
+   }
+
+   static Mode GetMode () {
+      WriteLine ("Enter mode [E]asy, [M]edium, [H]ard: ");
+      var key = ReadKey (true).Key;
+      return key switch {
+         ConsoleKey.E => Mode.Easy,
+         ConsoleKey.M => Mode.Medium,
+         ConsoleKey.H => Mode.Hard,
+         _ => GetMode (),
+      };
    }
 }
