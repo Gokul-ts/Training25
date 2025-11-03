@@ -9,40 +9,37 @@ using static System.Console;
 
 namespace Training25;
 internal class Program {
-   static string seed = "";
    static void Main () {
       var words = File.ReadAllLines (@"C:\etc\words.txt");
       for (; ; ) {
          Write ("Enter 7 letters starting with significant one: ");
          var input = ReadLine ()?.Trim ();
          if (!string.IsNullOrEmpty (input) && input.All (char.IsLetter) && input.Distinct ().Count () == 7) {
-            seed = input;
-            List<(string word, int score)> pairs = [];
-            foreach (var word in words) {
-               if (IsValid (word))
-                  pairs.Add ((word, GetScore (word)));
-            }
-            int totalScore = 0;
-            foreach (var pair in pairs) {
-               if (IsPangram (pair.word))
-                  ForegroundColor = ConsoleColor.Green;
-               WriteLine ($"{pair.score,5} {pair.word}");
+            sSeed = input;
+            List<(string word, int score, bool isPangram)> pairs = [];
+            foreach (var word in words.Where (IsValid))
+               pairs.Add ((word, GetScore (word, out bool isPangram), isPangram));
+            int total = 0;
+            foreach (var pair in pairs.OrderByDescending (a => a.score).ThenBy (a => a.word)) {
+               if (pair.isPangram) ForegroundColor = ConsoleColor.Green;
+               WriteLine ($"{pair.score,5}. {pair.word}");
                ResetColor ();
-               totalScore += pair.score;
+               total += pair.score;
             }
-            WriteLine ($"------\n{totalScore,5} Total");
+            WriteLine ($"------\n{total,5} Total");
          } else WriteLine ("Please enter a valid input!!");
       }
    }
 
-   static bool IsValid (string word)
-      => word.Length > 4 && word.Contains (seed[0]) && word.All (seed.Contains);
+   static bool IsValid (string word) => word.Length > 4 && word.Contains (sSeed[0]) && word.All (sSeed.Contains);
 
-   static bool IsPangram (string word)
-      => seed.All (word.Contains);
+   static bool IsPangram (string word) => sSeed.All (word.Contains);
 
-   static int GetScore (string word) {
+   static int GetScore (string word, out bool isPangram) {
       int length = word.Length;
-      return (length == 4) ? 1 : IsPangram (word) ? length + 7 : length;
+      isPangram = IsPangram (word);
+      return (length == 4) ? 1 : isPangram ? length + 7 : length;
    }
+
+   static string sSeed = "";
 }
