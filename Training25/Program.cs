@@ -16,14 +16,7 @@ internal class Program {
             Console.WriteLine ("Please enter a valid number!!!");
             continue;
          }
-         for (; ; ) {
-            Console.Write ("Do you want to convert it into (W)ords or (R)oman Numbers? : ");
-            var choice = Console.ReadKey ().Key;
-            if (choice is ConsoleKey.W or ConsoleKey.R) {
-               Console.WriteLine ($"\nNumber: {num}\n" + (choice == ConsoleKey.W ? $"Words: {ToWords (num)}" : $"Roman:  {ToRoman (num)}"));
-               break;
-            } else Console.WriteLine ("\nPlease enter a valid Key!!!");
-         }
+         Console.WriteLine ($"Number : {num}\nWords  :{ToWords (num)}\nRoman  : {ToRoman (num)}");
       }
    }
 
@@ -38,10 +31,20 @@ internal class Program {
          [7] = " Seven", [6] = " Six", [5] = " Five", [4] = " Four", [3] = " Three", [2] = " Two", [1] = " One"
       };
       string words = "";
-      foreach (var key in eWords.Keys) {
+      bool hasHundred = false;
+      foreach (var key in eWords.Keys.OrderByDescending (a => a)) {
          int temp = num / key;
          if (temp > 0) {
-            words += (key >= 100 ? eWords[temp] : "") + eWords[key];
+            if (key >= 100) {
+               words += eWords[temp] + eWords[key];
+               hasHundred = true;
+            } else {
+               if (hasHundred && words != "") {
+                  words += " and";
+                  hasHundred = false;
+               }
+               words += eWords[key];
+            }
             num %= key;
          }
       }
