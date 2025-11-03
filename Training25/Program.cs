@@ -44,8 +44,7 @@ internal class Program {
 
    static EMode GetMode () {
       WriteLine ("Enter mode [E]asy, [M]edium, [H]ard: ");
-      var key = ReadKey (true).Key;
-      return key switch {
+      return ReadKey (true).Key switch {
          ConsoleKey.E => EMode.Easy,
          ConsoleKey.M => EMode.Medium,
          ConsoleKey.H => EMode.Hard,
