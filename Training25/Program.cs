@@ -26,23 +26,13 @@ internal class Program {
    static string ToWords (int num) {
       if (num == 0) return eWords[0];
       string words = "";
-      if (num >= 1000) {
-         int thousands = num / 1000;
-         words += eWords[thousands] + eWords[1000];
-         num %= 1000;
-      }
-      if (num >= 100) {
-         int hundreds = num / 100;
-         num %= 100;
-         words += eWords[hundreds] + eWords[100] + (num > 0 ? " and" : "");
-      }
-      if (num >= 20) {
-         int tens = num / 10 * 10;
-         words += eWords[tens];
-         num %= 10;
-      }
-      if (num > 0) {
-         words += eWords[num];
+      while (num > 0) {
+         switch (num) {
+            case >= 1000: words += eWords[num / 1000] + eWords[1000]; num %= 1000; break;
+            case >= 100: words += eWords[num / 100] + eWords[100] + (num % 100 > 0 ? " and" : ""); num %= 100; break;
+            case >= 20: words += eWords[num / 10 * 10]; num %= 10; break;
+            default: words += eWords[num]; num = 0; break;
+         }
       }
       return words;
    }
@@ -51,24 +41,15 @@ internal class Program {
    static string ToRoman (int num) {
       if (num == 0) return rLetters[0];
       string roman = "";
-      if (num >= 1000) {
-         int thousands = (num / 1000) * 1000;
-         roman += rLetters[thousands];
-         num -= thousands;
-      }
-      if (num >= 100) {
-         int hundreds = ((num % 1000) / 100) * 100;
-         roman += rLetters[hundreds];
-         num -= hundreds;
-      }
-      if (num >= 10) {
-         int tens = (num % 100 / 10) * 10;
-         roman += rLetters[tens];
-         num -= tens;
-      }
-      if (num > 0) {
-         int units = num % 10;
-         roman += rLetters[units];
+      while (num > 0) {
+         int value = num switch {
+            >= 1000 => (num / 1000) * 1000,
+            >= 100 => (num % 1000 / 100) * 100,
+            >= 10 => (num % 100 / 10) * 10,
+            _ => num % 10
+         };
+         roman += rLetters[value];
+         num -= value;
       }
       return roman;
    }
