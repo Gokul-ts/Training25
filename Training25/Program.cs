@@ -41,7 +41,6 @@ internal class Program {
         _ => 1000,
      };
 
-
    static EMode GetMode () {
       WriteLine ("Enter mode [E]asy, [M]edium, [H]ard: ");
       return ReadKey (true).Key switch {
@@ -53,5 +52,6 @@ internal class Program {
    }
 
    enum EMode { Easy, Medium, Hard }
+
    enum EGuess { Low, High, Correct }
 }
